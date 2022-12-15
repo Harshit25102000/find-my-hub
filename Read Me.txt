@@ -1,0 +1,5 @@
+This web app takes a location and returns locations plotted on map along with lat and long and address which are suitable for the user to live 
+While creating account this app will ask some questions to classify user using KNN and then generate 100 points around the location , find details 
+about each point that is number of gyms , coffee , restaurants etc. and classify these locations and user will see only those locations which are
+perfect for him. For user classification , data used was downloaded from kaggle and clustered using Kmeans and for amenitites , dataset was made by 
+me using FourSquare api and then clustered using KMeans

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    {% load static %}
+    <link
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+rel="stylesheet"
+/>
+<!-- Google Fonts -->
+<link
+href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.css"
+rel="stylesheet"
+/>
+<!-- MDB -->
+<script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.js"
+></script>
+</head>
+<style>
+    body{
+        background-image: url('{% static "landing.png" %}');
+        background-size: cover;
+    }
+    .advise{
+        text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    }
+
+
+        .divider:after,
+.divider:before {
+content: "";
+flex: 1;
+height: 1px;
+background: #eee;
+}
+.h-custom {
+height: calc(100% - 73px);
+}
+.link-danger {
+    color: #ec6408!important;
+}
+.bg-primary {
+    --mdb-bg-opacity: 1;
+    background-color: #ec6408!important;
+}
+
+/* The alert message box */
+.alert-message {
+  padding: 20px;
+  background-color: black; /* Red */
+  color: white;
+  margin-bottom: 0px;
+}
+
+/* The close button */
+.closebtn-message {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn-message:hover {
+  color: black;
+}
+@media (max-width: 450px) {
+.h-custom {
+height: 100%;
+}
+
+}
+
+</style>
+<body>
+    <!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color:white;">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+      <!-- Toggle button -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-mdb-toggle="collapse"
+        data-mdb-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <!-- Collapsible wrapper -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent" >
+        <!-- Navbar brand -->
+        <a class="navbar-brand mt-2 mt-lg-0" href="#">
+          <img
+            src='{% static "logo.png" %}'
+            height="55"
+            alt="MDB Logo"
+            loading="lazy"
+          />
+        </a>
+        <!-- Left links -->
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout_view' %}">Logout</a>
+          </li>
+
+        </ul>
+        <!-- Left links -->
+      </div>
+      <!-- Collapsible wrapper -->
+
+
+    </div>
+    <!-- Container wrapper -->
+  </nav>
+  <!-- Navbar -->
+
+  <div class="container" style="width:30%;">
+   {% for message in messages  %}
+      <div class="alert-message">
+  <span class="closebtn-message" onclick="this.parentElement.style.display='none';">&times;</span>
+  {{message}}
+  </div>
+      {% endfor %}
+
+    <form action="/handle_input_name/" method="post" name="name">
+    {% csrf_token %}
+    <div class="input-group" style="margin-top:56%;margin-bottom:30px;">
+        <input type="search" class="form-control rounded" name="key" placeholder="Enter the place to search"
+        aria-label="Search" aria-describedby="search-addon" />
+        <button type="submit" class="btn btn-outline-primary" style="border-color:#ec6408;color:#ec6408;">search
+        </button>
+      </div>
+    </form>
+    <p class="advise">Or you can use latitude and longitude to <br>search for better accuracy</p>
+    <form action="/handle_latlong/" method="post" name="latlong">
+    {% csrf_token %}
+        <div class="form-outline">
+            <input type="text" id="form12" class="form-control"
+            name="latitude" style="background-color: white;margin-bottom:30px;"/>
+            <label class="form-label" for="form12">Enter Latitude</label>
+          </div>
+
+          <div class="form-outline">
+            <input type="text" id="form12" name="longitude" class="form-control"
+            style="background-color: white;margin-bottom:30px;"/>
+            <label class="form-label" for="form12">Enter Longitude</label>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="background-color:#ec6408">Search</button>
+    </form>
+  </div>
+</body>
+</html>

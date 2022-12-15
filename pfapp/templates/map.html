@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+    {% load static %}
+    <!-- Font Awesome -->
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+rel="stylesheet"
+/>
+<!-- Google Fonts -->
+<link
+href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.css"
+rel="stylesheet"
+/>
+<!-- MDB -->
+<script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.js"
+></script>
+<style>
+
+/* The alert message box */
+.alert-message {
+  padding: 20px;
+  background-color: black; /* Red */
+  color: white;
+  margin-bottom: 0px;
+}
+
+/* The close button */
+.closebtn-message {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn-message:hover {
+  color: black;
+}
+</style>
+</head>
+
+
+
+<body>
+
+        <section class="vh-100" style="background-color: #eee;">
+        <div class="container h-100">
+        <h1 style="text-align-last: center;
+    margin-top: 0px;
+    margin-bottom: 35px;">You searched for 18.54654,73.67658</h1>
+          <div class="row d-flex justify-content-center align-items-center h-80" style="height: 5%;">
+            <div class="col-lg-12 col-xl-11" style="width:80%">
+              <div class="card text-black" style="border-radius: 25px;">
+                <div class="card-body p-md-5">
+                  <div class="row justify-content-center">
+                    {{m | safe}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+        </div>
+      </section>
+
+<h2 style="text-align-last: center;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}">Location of points matching your interest</h2>
+<div class="table" style="margin-top: 50px;">
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Latitude , Longitude, Address</th>
+
+
+
+    </tr>
+  </thead>
+  <tbody>
+  {% for i in points %}
+    <tr>
+      <td scope="row">{{ i }}</td>
+
+
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+<a href="{% url 'homepage' %}"><button type="Button" class="btn btn-primary" style="margin: 2% 48%;
+    background-color: #ec6408;">Back</button></a>
+</body>
+</html>

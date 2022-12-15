@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question</title>
+    <!-- Font Awesome -->
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+rel="stylesheet"
+/>
+<!-- Google Fonts -->
+<link
+href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.css"
+rel="stylesheet"
+/>
+<!-- MDB -->
+<script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.js"
+></script>
+
+<style>
+    .form-select {
+        margin-bottom: 20px;
+    }
+    .heading{
+        text-align: center;
+    font-size: 122%;
+    font-weight: bold;
+    }
+</style>
+</head>
+<body>
+    <section class="vh-100" style="background-color: #eee;">
+        <div class="container h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-12 col-xl-11">
+              <div class="card text-black" style="border-radius: 25px;">
+                <div class="card-body p-md-5">
+                  <div class="row justify-content-center">
+                    <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+
+                      <p class="heading">Welcome ! Please Answer these questions<br>(It's One time)</p>
+
+                      <form class="mx-1 mx-md-4" action='/handle_user_info/' method="post">
+                        {% csrf_token %}
+                        <p>1. What type of coffee you relate to ?</p>
+                        <select class="form-select" name="coffee" aria-label="Default select example">
+
+                            <option value="1">1 - creamy frapuccino (starbucks type)</option>
+                            <option value="2">2 - espresso (normal milk coffee)</option>
+
+                          </select>
+
+
+                            <p>2. How often do you cook ? ?</p>
+                        <select class="form-select" name="cook" aria-label="Default select example">
+
+                            <option value="1">1 - Every day </option>
+                            <option value="2">2 - A couple of times a week </option>
+                            <option value="3">3 - Whenever I can, but that is not very often  </option>
+                            <option value="4">4 - I only help a little during holidays </option>
+                            <option value="5">5 - Never, I really do not know my way around a kitchen</option>
+                        </select>
+                          <p>3. What do you associate with the word "drink" ?</p>
+                        <select class="form-select" name="drink" aria-label="Default select example">
+
+                            <option value="1">1 - Juice/Soda</option>
+                            <option value="2">2 - Cocktails</option>
+
+                          </select>
+
+                          <p>4. Frequency of eating out in a week ?</p>
+                        <select class="form-select" name="eating_out" aria-label="Default select example">
+
+                            <option value="1">1 - Never</option>
+                            <option value="2">2 - 1-2 times</option>
+                            <option value="3">3 - 2-3 times</option>
+                            <option value="4">4 - 3-5 times</option>
+                            <option value="5">5 - Everyday</option>
+
+                          </select>
+
+                          <p>5. How often do you exercise in a week ?</p>
+                          <select class="form-select" name="exercise" aria-label="Default select example">
+
+                              <option value="1">1 - Everyday</option>
+                              <option value="2">2 - Twice or three times per week </option>
+                              <option value="3">3 - Once a week</option>
+                              <option value="4">4 - Sometimes </option>
+                              <option value="5">5 - Never</option>
+
+                            </select>
+
+                            <p>6. How much would you pay for meal out (per person) ?</p>
+                            <select class="form-select" name="pay_meal" aria-label="Default select example">
+
+                                <option value="1">1 - upto Rs 200</option>
+                                <option value="2">2 - Rs 200 to Rs 400 </option>
+                                <option value="3">3 - Rs 400 to Rs 800</option>
+                                <option value="4">4 - Rs 800 to Rs 1200 </option>
+                                <option value="5">5 - More than Rs 1200</option>
+
+                              </select>
+
+
+
+                      <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                          <button type="submit" class="btn btn-primary btn-lg" style="background-color: #ec6408;">Done</button>
+                        </div>
+
+                      </form>
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+</body>
+</html>
