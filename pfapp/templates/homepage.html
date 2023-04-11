@@ -142,12 +142,20 @@ height: 100%;
   {{message}}
   </div>
       {% endfor %}
-
+    <div class="form-check" style="margin: auto 122px;
+    margin-top: 31px;
+    margin-bottom: -200px;">
+  <input class="form-check-input" type="checkbox" name="radioBtn" value="on" id="flexCheckDefault">
+  <label class="form-check-label" for="flexCheckDefault">
+    Fetch History
+  </label>
+</div>
     <form action="/handle_input_name/" method="post" name="name">
     {% csrf_token %}
     <div class="input-group" style="margin-top:56%;margin-bottom:30px;">
         <input type="search" class="form-control rounded" name="key" placeholder="Enter the place to search"
         aria-label="Search" aria-describedby="search-addon" />
+        <input type="hidden" name="hiddenInput" id="hiddenInput" />
         <button type="submit" class="btn btn-outline-primary" style="border-color:#ec6408;color:#ec6408;">search
         </button>
       </div>
@@ -166,9 +174,18 @@ height: 100%;
             style="background-color: white;margin-bottom:30px;"/>
             <label class="form-label" for="form12">Enter Longitude</label>
           </div>
-
+            <input type="hidden" name="hiddenInput" id="hiddenInput" />
           <button type="submit" class="btn btn-primary" style="background-color:#ec6408">Search</button>
     </form>
   </div>
 </body>
 </html>
+
+<script>
+    const radioBtn = document.querySelector('input[name="radioBtn"]');
+const hiddenInput = document.getElementById('hiddenInput');
+
+radioBtn.addEventListener('change', (event) => {
+  hiddenInput.value = event.target.value;
+});
+</script>

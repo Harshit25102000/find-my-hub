@@ -1,5 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
+from .models import *
+import pandas as pd
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -8,6 +10,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login, logout
 import requests
 import folium
+from .tasks import worker_function
 import random
 from geopy import Point
 from geopy.distance import geodesic
@@ -17,6 +20,7 @@ import urllib.parse
 import numpy as np
 import sklearn
 
+num=5
 User = get_user_model()
 
 import pandas as pd
@@ -55,7 +59,7 @@ def handle_signup(request):
             siteuser = User.objects.create_user(email, password1)
             siteuser.save()
             messages.success(request, 'Account created successfully! Please login using your credentials')
-            return redirect('loginpage')
+            return redirect('login')
 
         except:
             messages.success(request, 'Error creating account')
@@ -74,7 +78,7 @@ def handle_login(request):
 
         if '@' not in email:
             messages.error(request, 'Enter a valid email address')
-            return redirect('loginpage')
+            return redirect('login')
 
         user = authenticate(email=email, password=password)
         if user is not None:
@@ -84,7 +88,7 @@ def handle_login(request):
             return redirect('homepage')
         else:
             messages.error(request,"Invalid Credentials, Please try again")
-            return redirect('loginpage')
+            return redirect('login')
     else:
         return HttpResponse("Not Allowed")
 
@@ -160,43 +164,22 @@ def handle_input_name(request):
 
 
         address = request.POST['key']
-        try:
+        val = request.POST['hiddenInput']
+        print(val)
+        print(type(val))
+        dataframes = Dataframe.objects.filter(user=request.user,area=address).first()
 
-            ls=latlong(address)
-            latitude=ls[0]
-            longitude=ls[1]
 
-            print(latitude, longitude)
-            df = getallpos(latitude, longitude)
 
-            print(df)
-            gymarray = getgym(df)
-            restarray = getrest(df)
-            coffeearray = getcoffee(df)
-            df["gyms"] = gymarray
-            df["restaurants"] = restarray
-            df["coffee"] = coffeearray
-            shoppingarray = getshopping(df)
-            parksarray = getparks(df)
-            drinksarray = getdrinks(df)
-            df["shopping"] = shoppingarray
-            df["parks"] = parksarray
-            df["drinks"] = drinksarray
-            print(df)
-            model = joblib.load('amenity_classifier_py.sav')
-            x = df.drop(['latitude', 'longitude'], axis='columns')
-            y = model.predict(x)
-            df["cluster"] = y
-            print(df)
-            user = request.user
-            info = people_info.objects.filter(user=user).first()
-            user_cluster = info.cluster
-            if user_cluster == 2:
-                rslt_df = df[(df['cluster'] == 1)]
-            elif user_cluster == 1:
-                rslt_df = df[(df['cluster'] == 2)]
-            elif user_cluster == 0:
-                rslt_df = df[(df['cluster'] == 0)]
+        #try:
+        if val=="on" and dataframes:
+            # Retrieve the dataframe from the database
+            print("running")
+            ls = latlong(address)
+            latitude = ls[0]
+            longitude = ls[1]
+            retrieved_dataframe = dataframes.get_dataframe()
+            rslt_df=retrieved_dataframe
 
             print(rslt_df)
             addr = []
@@ -218,13 +201,26 @@ def handle_input_name(request):
                                                                                               str(long[i])).add_to(m)
             m = m._repr_html_()
             points = zip(lat, long, addr)
+
             context = {'m': m, 'points': points}
             return render(request, 'map.html', context)
 
-        except:
+        else:
+
+            email = str(request.user.email)
+            args = str(str(address) + '&' + str(email))
+            worker_function.delay(args)
+            messages.error(request, "Processing for your request is started , once completed you will get an email")
+            return redirect('homepage')
+
+
+
+
+        """except Exception as e:
+            print(e)
             messages.error(request, "Sorry we can't find this address , please use latitude and longitude to "
             "use our services")
-            return redirect('homepage')
+            return redirect('homepage')"""
 
 
     else:   
@@ -236,7 +232,8 @@ def handle_latlong(request):
     if request.method == 'POST':
         latitude=request.POST['latitude']
         longitude=request.POST['longitude']
-        print(latitude,longitude)
+        val=request.POST['hiddenInput']
+        print(latitude,longitude,val)
         df=getallpos(latitude,longitude)
 
         print(df)
@@ -313,7 +310,7 @@ def getallpos(latitude,longitude):
     center = Point(latitude, longitude)
 
     points = []
-    for i in range(100):
+    for i in range(num):
         a = ((generate_point(center, radius)))
         points.append(a)
 
@@ -377,7 +374,7 @@ def getgym(df):
         "Authorization": "fsq3Ov/Qqhpqdc7yJYNb/RBkuHG9VPwR1zr1H1S5NEJxh+A="
     }
 
-    for i in range(100):
+    for i in range(num):
         params = {
             "query": "gym",
             "ll": str(str(df['latitude'][i])+','+str(df['longitude'][i])),
@@ -400,7 +397,7 @@ def getrest(df):
         "Authorization": "fsq3Ov/Qqhpqdc7yJYNb/RBkuHG9VPwR1zr1H1S5NEJxh+A="
     }
 
-    for i in range(100):
+    for i in range(num):
         params = {
             "query": "restaurants",
             "ll": str(str(df['latitude'][i]) + ',' + str(df['longitude'][i])),
@@ -423,7 +420,7 @@ def getcoffee(df):
         "Authorization": "fsq3Ov/Qqhpqdc7yJYNb/RBkuHG9VPwR1zr1H1S5NEJxh+A="
     }
 
-    for i in range(100):
+    for i in range(num):
         params = {
             "query": "coffee",
             "ll": str(str(df['latitude'][i]) + ',' + str(df['longitude'][i])),
@@ -447,7 +444,7 @@ def getshopping(df):
         "Authorization": "fsq3Ov/Qqhpqdc7yJYNb/RBkuHG9VPwR1zr1H1S5NEJxh+A="
     }
 
-    for i in range(100):
+    for i in range(num):
         params = {
             "query": "shopping",
             "ll": str(str(df['latitude'][i]) + ',' + str(df['longitude'][i])),
@@ -470,7 +467,7 @@ def getparks(df):
         "Authorization": "fsq3Ov/Qqhpqdc7yJYNb/RBkuHG9VPwR1zr1H1S5NEJxh+A="
     }
 
-    for i in range(100):
+    for i in range(num):
         params = {
             "query": "parks",
             "ll": str(str(df['latitude'][i]) + ',' + str(df['longitude'][i])),
@@ -493,7 +490,7 @@ def getdrinks(df):
         "Authorization": "fsq3Ov/Qqhpqdc7yJYNb/RBkuHG9VPwR1zr1H1S5NEJxh+A="
     }
 
-    for i in range(100):
+    for i in range(num):
         params = {
             "query": "drinks",
             "ll": str(str(df['latitude'][i]) + ',' + str(df['longitude'][i])),

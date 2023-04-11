@@ -1,8 +1,10 @@
 from django.db import models
-
+import pandas as pd
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import gettext_lazy as _
-
+import pickle
+from django.db.models import JSONField
+import json
 # Create your models here.
 
 # User customization goes down
@@ -64,3 +66,32 @@ class people_info(models.Model):
     exercise= models.CharField(max_length=10)
     pay_meal = models.CharField(max_length=10)
     cluster=models.IntegerField(max_length=10,default=0)
+
+class Dataframe(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    area=models.CharField(default="none",max_length=100)
+    dataframe_binary = models.BinaryField()
+
+    def set_dataframe(self, df):
+        self.dataframe_binary = pickle.dumps(df)
+
+    def get_dataframe(self):
+        df = pickle.loads(self.dataframe_binary)
+        return df
+
+class Location(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    latitude = models.TextField()
+    longitude = models.TextField()
+
+    def set_latitude(self, latitude):
+        self.latitude = json.dumps(latitude)
+
+    def get_latitude(self):
+        return json.loads(self.latitude)
+
+    def set_longitude(self, longitude):
+        self.longitude = json.dumps(longitude)
+
+    def get_longitude(self):
+        return json.loads(self.longitude)

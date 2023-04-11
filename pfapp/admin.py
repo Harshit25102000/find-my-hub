@@ -5,6 +5,8 @@ from django.utils.translation import gettext_lazy as _
 # Register your models here.
 from .models import *
 admin.site.register(people_info)
+admin.site.register(Dataframe)
+admin.site.register(Location)
 
 
 
