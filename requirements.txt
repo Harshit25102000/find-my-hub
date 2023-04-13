@@ -48,7 +48,7 @@ kombu==5.2.4
 lxml==4.9.2
 MarkupSafe==2.1.1
 matplotlib==3.6.2
-numpy @ file:///C:/Code%20folders/place%20finder/pfproject/numpy-1.22.4%2Bmkl-cp38-cp38-win32.whl
+numpy==1.24.2
 packaging==22.0
 pandas==1.5.2
 Pillow==9.3.0
@@ -66,8 +66,8 @@ python-dateutil==2.8.2
 pytz==2022.6
 redis==4.5.4
 requests==2.28.1
-scikit-learn @ file:///C:/Code%20folders/place%20finder/pfproject/scikit_learn-0.24.2-cp38-cp38-win32.whl
-SciPy @ file:///C:/Code%20folders/place%20finder/pfproject/SciPy-1.8.1-cp38-cp38-win32.whl
+scikit-learn==1.2.2
+SciPy==1.10.1
 six==1.16.0
 sklearn==0.0.post1
 snowballstemmer==2.2.0
