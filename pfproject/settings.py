@@ -11,11 +11,14 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'static/js', 'serviceworker.js')
 
-
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -25,7 +28,7 @@ SECRET_KEY = 'django-insecure-ez%7#9rt1ev_v-1dbm7l&u_!ye+tf65o%tm)ekz8k57&2fly9z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['4bf7-122-177-17-86.ngrok-free.app','127.0.0.1']
 
 
 # Application definition
@@ -41,6 +44,7 @@ INSTALLED_APPS = [
     'django_jsonfield_backport',
 'django_celery_results',
     'django_celery_beat',
+    'pwa',
 ]
 
 MIDDLEWARE = [
@@ -134,7 +138,7 @@ EMAIL_HOST_USER = 'harshit25102000@gmail.com'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = '587'
 EMAIL_USE_TLS = True
-EMAIL_HOST_PASSWORD = "xtudqjojztjcnmcv"
+EMAIL_HOST_PASSWORD = "ivluycjevfolxpjc"
 
 
 
@@ -146,3 +150,35 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Asia/Kolkata'
 #EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
+
+
+PWA_APP_NAME = 'Find My Hub'
+PWA_APP_DESCRIPTION = "Find My Hub lets user find perfect place as per their taste in given area"
+PWA_APP_THEME_COLOR = '#EC6408'
+PWA_APP_BACKGROUND_COLOR = '#ffffff'
+PWA_APP_DISPLAY = 'standalone'
+PWA_APP_SCOPE = '/'
+PWA_APP_ORIENTATION = 'any'
+PWA_APP_START_URL = '/'
+PWA_APP_STATUS_BAR_COLOR = 'default'
+PWA_APP_ICONS = [
+	{
+		'src': 'static/images/icon-160x160.png',
+		'sizes': '160x160'
+	}
+]
+PWA_APP_ICONS_APPLE = [
+	{
+		'src': 'static/images/icon-160x160.png',
+		'sizes': '160x160'
+	}
+]
+PWA_APP_SPLASH_SCREEN = [
+	{
+		'src': 'static/images/icon.png',
+		'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
+	}
+]
+PWA_APP_DIR = 'ltr'
+PWA_APP_LANG = 'en-US'
+PWA_APP_DEBUG_MODE = False
