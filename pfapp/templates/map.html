@@ -52,6 +52,15 @@ rel="stylesheet"
 .closebtn-message:hover {
   color: black;
 }
+
+@media (max-width: 450px) {
+.vh-100{
+    height:1%!important;
+}
+
+
+
+}
 </style>
 </head>
 
@@ -98,7 +107,7 @@ rel="stylesheet"
   <tbody>
   {% for i in points %}
     <tr>
-      <td scope="row">{{ i }}</td>
+     <td scope="row"> <a href="/details/{{i}}">{{ i }}</a></td>
 
 
     </tr>

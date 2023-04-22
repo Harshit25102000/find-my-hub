@@ -13,6 +13,6 @@ path("handle_user_info/",views.handle_user_info,name="handle_user_info"),
 path("handle_input_name/",views.handle_input_name,name="handle_input_name"),
 path("handle_latlong/",views.handle_latlong,name="handle_latlong"),
 path("logout_view/",views.logout_view,name="logout_view"),
-
+path("details/<str:info>",views.details,name="details"),
 
 ]

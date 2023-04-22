@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details</title>
+
+<!-- MDB -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css"
+  rel="stylesheet"/>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color:white;">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+      <!-- Toggle button -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-mdb-toggle="collapse"
+        data-mdb-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <!-- Collapsible wrapper -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent" >
+        <!-- Navbar brand -->
+        <a class="navbar-brand mt-2 mt-lg-0" href="{% url 'homepage' %}">
+          <img
+            src='{% static "logo.png" %}'
+            height="55"
+            alt="MDB Logo"
+            loading="lazy"
+          />
+        </a>
+        <!-- Left links -->
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout_view' %}">Logout</a>
+          </li>
+
+        </ul>
+        <!-- Left links -->
+      </div>
+      <!-- Collapsible wrapper -->
+
+
+    </div>
+    <!-- Container wrapper -->
+  </nav>
+  <!-- Navbar -->
+  <div class="content" style="background-color:4f4f4f;">
+<div class="gym" style="margin-bottom:30px;">
+        <h2 style="text-align:center;">Nearby Gyms</h2>
+        <table class="table">
+            <thead>
+              <tr>
+
+                <th scope="col">Name</th>
+                <th scope="col">Address</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              {% for i,j in gym %}
+              <tr>
+
+                <td>{{i}}</td>
+                <td>{{j.address}} {{j.locality}} {{j.postcode}}</td>
+
+              </tr>
+              {% endfor %}
+
+
+            </tbody>
+          </table>
+    </div>
+
+    <div class="rest" style="margin-bottom:30px;">
+        <h2 style="text-align:center;">Nearby Restaurants</h2>
+        <table class="table">
+            <thead>
+              <tr>
+
+                <th scope="col">Name</th>
+                <th scope="col">Address</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              {% for i,j in rest %}
+              <tr>
+
+                <td>{{i}}</td>
+                <td>{{j.address}} {{j.locality}} {{j.postcode}}</td>
+
+              </tr>
+              {% endfor %}
+
+
+            </tbody>
+          </table>
+    </div>
+
+     <div class="rest" style="margin-bottom:30px;">
+        <h2 style="text-align:center;">Nearby Coffee Shops</h2>
+        <table class="table">
+            <thead>
+              <tr>
+
+                <th scope="col">Name</th>
+                <th scope="col">Address</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              {% for i,j in coffee %}
+              <tr>
+
+                <td>{{i}}</td>
+                <td>{{j.address}} {{j.locality}} {{j.postcode}}</td>
+
+              </tr>
+              {% endfor %}
+
+
+            </tbody>
+          </table>
+    </div>
+
+     <div class="rest" style="margin-bottom:30px;">
+        <h2 style="text-align:center;">Nearby Shopping Places</h2>
+        <table class="table">
+            <thead>
+              <tr>
+
+                <th scope="col">Name</th>
+                <th scope="col">Address</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              {% for i,j in shopping %}
+              <tr>
+
+                <td>{{i}}</td>
+                <td>{{j.address}} {{j.locality}} {{j.postcode}}</td>
+
+              </tr>
+              {% endfor %}
+
+
+            </tbody>
+          </table>
+    </div>
+
+     <div class="rest" style="margin-bottom:30px;">
+        <h2 style="text-align:center;">Nearby Parks</h2>
+        <table class="table">
+            <thead>
+              <tr>
+
+                <th scope="col">Name</th>
+                <th scope="col">Address</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              {% for i,j in parks %}
+              <tr>
+
+                <td>{{i}}</td>
+                <td>{{j.address}} {{j.locality}} {{j.postcode}}</td>
+
+              </tr>
+              {% endfor %}
+
+
+            </tbody>
+          </table>
+    </div>
+
+     <div class="rest" style="margin-bottom:30px;">
+        <h2 style="text-align:center;">Nearby Places to drink</h2>
+        <table class="table">
+            <thead>
+              <tr>
+
+                <th scope="col">Name</th>
+                <th scope="col">Address</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              {% for i,j in drinks %}
+              <tr>
+
+                <td>{{i}}</td>
+                <td>{{j.address}} {{j.locality}} {{j.postcode}}</td>
+
+              </tr>
+              {% endfor %}
+
+
+            </tbody>
+          </table>
+    </div>
+    </div>
+</body>
+</html>

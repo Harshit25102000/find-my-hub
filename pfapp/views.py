@@ -345,10 +345,30 @@ def map(request):
     return render(request, 'map.html', context)"""
 
 
+from .utils import *
 
 
+def details(request,info):
+    print(info)
+    string=info
+    # extract latitude and longitude from string
+    lat_long_str = string.split('(')[1].split(')')[0]  # extract the string between the parentheses
+    lat, long = lat_long_str.split(', ')[0], lat_long_str.split(', ')[1]  # split latitude and longitude values
+    gym_name, gym_loc=gym_details(lat,long)
+    gym=zip(gym_name,gym_loc)
+    rest_name, rest_loc=rest_details(lat,long)
+    rest = zip(rest_name, rest_loc)
+    coffee_name, coffee_loc=coffee_details(lat,long)
+    coffee = zip(coffee_name, coffee_loc)
+    shopping_name, shopping_loc=shopping_details(lat,long)
+    shopping = zip(shopping_name, shopping_loc)
+    parks_name, parks_loc=parks_details(lat,long)
+    parks = zip(parks_name, parks_loc)
+    drinks_name, drinks_loc=drinks_details(lat,long)
+    drinks = zip(drinks_name, drinks_loc)
+    context={'gym':gym,'rest':rest,'coffee':coffee,'shopping':shopping,'parks':parks,'drinks':drinks}
 
-
+    return render(request, 'details.html', context)
 
 
 
